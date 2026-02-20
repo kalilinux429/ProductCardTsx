@@ -8,7 +8,7 @@ interface Props {
 
 const ProductCard: React.FC<Props> = ({ product }) => {
   return (
-    <Card sx={{ width: 260, m: 2, boxShadow: 3, borderRadius: 3 }}>
+    <Card sx={{ width: 260, boxShadow: 3, borderRadius: 3 }}>
       <CardMedia
         component="img"
         height="150"
@@ -20,7 +20,7 @@ const ProductCard: React.FC<Props> = ({ product }) => {
         <Typography>Price: ${product.price}</Typography>
         <Typography>Discount: {product.discountPercentage}%</Typography>
 
-        {/* ⭐ Star Rating */}
+        {/* Star Rating */}
         <Box display="flex" alignItems="center" gap={1}>
           <Rating
             value={product.rating}
