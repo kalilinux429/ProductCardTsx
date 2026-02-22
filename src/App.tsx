@@ -35,7 +35,7 @@ export default function App() {
   return (
     <Container sx={{ mt: 4 }}>
       <Typography variant="h4" mb={3}>
-        Product List
+       <b> Product List</b> 
       </Typography>
 
       {/* Loading State */}
