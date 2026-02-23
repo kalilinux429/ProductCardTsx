@@ -2,8 +2,10 @@ import { render, screen } from "@testing-library/react";
 import ProductList from "./ProductList";
 import { Product } from "../types/product";
 
+// Test suite
 describe("ProductList Component", () => {
 
+  // Mock products data
   const mockProducts: Product[] = [
     {
       id: 1,
@@ -31,19 +33,24 @@ describe("ProductList Component", () => {
     },
   ];
 
-  test("renders all products dynamically using forEach", () => {
+  test("renders all products dynamically", () => {
+
     render(<ProductList products={mockProducts} />);
 
+    // Check each product title
     mockProducts.forEach((product) => {
       expect(screen.getByText(product.title)).toBeInTheDocument();
     });
 
+    // Get all product elements
     const renderedItems = screen.getAllByText(/Product/i);
+
+    // Check total count
     expect(renderedItems.length).toBe(mockProducts.length);
   });
 
   test("renders nothing when products array is empty", () => {
-    render(<ProductList products={[]} />);
+   render(<ProductList products={[]} />);
     expect(screen.queryByText(/Product/i)).not.toBeInTheDocument();
   });
 

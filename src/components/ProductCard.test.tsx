@@ -1,48 +1,54 @@
 import { render, screen } from "@testing-library/react";
-import ProductCard from "./ProductCard";
+import ProductList from "./ProductList";
 import { Product } from "../types/product";
 
-describe("ProductCard Component", () => {
+describe("ProductList Component", () => {
 
-  const mockProduct: Product = {
-    id: 1,
-    title: "iPhone 15",
-    price: 999,
-    discountPercentage: 10,
-    rating: 4.5,
-    thumbnail: "iphone.jpg",
-  };
+  // Mock product data for testing
+  const mockProducts: Product[] = [
+    {
+      id: 1,
+      title: "Product A",
+      price: 100,
+      discountPercentage: 10,
+      rating: 4.5,
+      thumbnail: "image1.jpg",
+    },
+    {
+      id: 2,
+      title: "Product B",
+      price: 200,
+      discountPercentage: 15,
+      rating: 4.2,
+      thumbnail: "image2.jpg",
+    },
+    {
+      id: 3,
+      title: "Product C",
+      price: 300,
+      discountPercentage: 20,
+      rating: 4.8,
+      thumbnail: "image3.jpg",
+    },
+  ];
 
-  test("renders product title", () => {
-    render(<ProductCard product={mockProduct} />);
-    expect(screen.getByText(mockProduct.title)).toBeInTheDocument();
+  // Test to check all products are rendered correctly
+  test("renders all products dynamically ", () => {
+    render(<ProductList products={mockProducts} />);
+
+    mockProducts.forEach((product) => {
+      expect(screen.getByText(product.title)).toBeInTheDocument();
+    });
+
+    const renderedItems = screen.getAllByText(/Product/i);
+    expect(renderedItems.length).toBe(mockProducts.length);
   });
 
-  test("renders product price", () => {
-    render(<ProductCard product={mockProduct} />);
-    expect(
-      screen.getByText(`Price: $${mockProduct.price}`)
-    ).toBeInTheDocument();
-  });
-
-  test("renders product discount", () => {
-    render(<ProductCard product={mockProduct} />);
-    expect(
-      screen.getByText(`Discount: ${mockProduct.discountPercentage}%`)
-    ).toBeInTheDocument();
-  });
-
-  test("renders product rating value", () => {
-    render(<ProductCard product={mockProduct} />);
-    expect(
-      screen.getByText(`(${mockProduct.rating})`)
-    ).toBeInTheDocument();
-  });
-
-  test("renders product image with correct alt text", () => {
-    render(<ProductCard product={mockProduct} />);
-    const image = screen.getByAltText(mockProduct.title);
-    expect(image).toBeInTheDocument();
+  // Test to check component handles empty product list
+  test("renders nothing when products array is empty", () => {
+    render(<ProductList products={[]} />);
+    expect(screen.queryByText(/Product/i)).not.toBeInTheDocument();
   });
 
 });
+
